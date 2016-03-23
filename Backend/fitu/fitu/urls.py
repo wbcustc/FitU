@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from rest_framework import routers
-from fitu_backend import views
+from fitu_backend import views as json_views
+from dbview import views as html_views
+from rest_framework.authtoken import views as token_views
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+router.register(r'userviews', html_views.UserViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^users/$', json_views.user_list),
+    url(r'^users/(?P<pk>[0-9]+)/$', json_views.user_detail),
+    url(r'^api-token-auth/', token_views.obtain_auth_token)
+    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

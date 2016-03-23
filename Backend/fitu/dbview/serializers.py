@@ -1,0 +1,9 @@
+from fitu_backend.models import CustomUser
+from rest_framework import serializers
+
+
+class UserviewSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'username', 
+        	'email', 'weight', 'height', 'gender')
