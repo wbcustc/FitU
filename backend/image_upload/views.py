@@ -37,7 +37,7 @@ class PhotoUpload(APIView):
 	parser_classes = (MultiPartParser, FormParser,)
 	def get(self, request, format=None):
 		ret = []
-		for record in PhotoRecord.objects.all():
+		for record in PhotoRecord.objects.order_by('photoId').all():
 			temp_dict = {
 				'brand' : record.brand, 
 				'photoUrl' : record.photoUrl, 
@@ -52,7 +52,7 @@ class PhotoUpload(APIView):
 		username = request.POST['username']
 		buy_link = request.POST['buylink']
 		brand = request.POST['brand']
-		photo_id = username + str(int(time.time() * 1000)) + '.jpg'
+		photo_id = str(int(time.time() * 1000)) + '-' + username + '.jpg'
 		s3 = boto3.client('s3')
 		s3.put_object(Bucket = photo_bucket, 
 			Key = photo_id, Body = curr_photo)
