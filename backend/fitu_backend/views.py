@@ -3,6 +3,30 @@ from serializers import UserSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from fitu.utils import JSONResponse
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+
+class ObtainAuthToken(APIView):
+    throttle_classes = ()
+    permission_classes = ()
+    # parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
+    serializer_class = AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'user': UserSerializer(user).data, 'token': token.key})
+
+
+obtain_auth_token = ObtainAuthToken.as_view()
+
+
+
 
 @csrf_exempt
 def user_list(request):
@@ -53,6 +77,7 @@ def check_duplicate(request):
         except CustomUser.DoesNotExist:
             return JSONResponse({'available': True, 'Message': 'Valid username.'})
         return JSONResponse({'available': False, 'Message': 'Duplicate username'})
+
 
 
 

@@ -29,6 +29,9 @@ urlpatterns = [
     url(r'^users/check-duplicate$', json_views.check_duplicate),
     url(r'^users/(?P<username>.+)/$', json_views.user_detail),
     url(r'^avatars/$', upload_views.AvatarUpload.as_view()),
-    url(r'^api-token-auth/', token_views.obtain_auth_token),
+    url(r'^photos/$', upload_views.PhotoUpload.as_view()),
+    url(r'^photos/(?P<username>.+)/$', upload_views.UserPhotoList.as_view()),
+    #url(r'^api-token-auth/', token_views.obtain_auth_token),
+    url(r'^api-token-auth/', json_views.obtain_auth_token),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
