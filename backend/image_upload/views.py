@@ -37,7 +37,7 @@ class PhotoUpload(APIView):
 	parser_classes = (MultiPartParser, FormParser,)
 	def get(self, request, format=None):
 		ret = []
-		for record in PhotoRecord.objects.order_by('photoId').all():
+		for record in PhotoRecord.objects.order_by('-photoId').all():
 			temp_dict = {
 				'brand' : record.brand, 
 				'photoUrl' : record.photoUrl, 
@@ -67,7 +67,7 @@ class PhotoUpload(APIView):
 class UserPhotoList(APIView):
 	def get_objects(self, username):
 		try:
-			return PhotoRecord.objects.filter(username = username)
+			return PhotoRecord.objects.order_by('-photoId').filter(username = username)
 		except PhotoRecord.DoesNotExist:
 			return None
 
