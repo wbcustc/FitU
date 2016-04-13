@@ -18,20 +18,17 @@ from rest_framework import routers
 from fitu_backend import views as json_views
 from dbview import views as html_views
 from image_upload import views as upload_views
-from rest_framework.authtoken import views as token_views
 
 router = routers.DefaultRouter()
 router.register(r'userviews', html_views.UserViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^users/$', json_views.user_list),
-    url(r'^users/check-duplicate$', json_views.check_duplicate),
-    url(r'^users/(?P<username>.+)/$', json_views.user_detail),
+    url(r'^users/$', json_views.user_list.as_view()),
+    url(r'^users/check-duplicate$', json_views.check_duplicate.as_view()),
     url(r'^avatars/$', upload_views.AvatarUpload.as_view()),
     url(r'^photos/$', upload_views.PhotoUpload.as_view()),
     url(r'^photos/(?P<username>.+)/$', upload_views.UserPhotoList.as_view()),
-    #url(r'^api-token-auth/', token_views.obtain_auth_token),
-    url(r'^api-token-auth/', json_views.obtain_auth_token),
+    url(r'^api-token-auth/', json_views.ObtainAuthToken.as_view()),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

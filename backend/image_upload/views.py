@@ -5,6 +5,7 @@ from fitu.utils import JSONResponse
 from fitu_backend.models import CustomUser
 from fitu_backend.serializers import UserSerializer
 from models import PhotoRecord
+from rest_framework.permissions import IsAuthenticated
 import time
 import boto3
 
@@ -35,6 +36,8 @@ class AvatarUpload(APIView):
 	    
 class PhotoUpload(APIView):
 	parser_classes = (MultiPartParser, FormParser,)
+	#permission_classes = (IsAuthenticated,)
+
 	def get(self, request, format=None):
 		ret = []
 		for record in PhotoRecord.objects.order_by('-photoId').all():
@@ -65,6 +68,8 @@ class PhotoUpload(APIView):
 		return JSONResponse({ 'photoUrl' : photo_url })    	
 
 class UserPhotoList(APIView):
+	#permission_classes = (IsAuthenticated,)
+
 	def get_objects(self, username):
 		try:
 			return PhotoRecord.objects.order_by('-photoId').filter(username = username)

@@ -16,6 +16,10 @@ class Migration(migrations.Migration):
         ('auth', '0007_alter_validators_add_error_messages'),
     ]
 
+    needed_by = (
+        ('authtoken', '0001_initial'),
+    )
+
     operations = [
         migrations.CreateModel(
             name='CustomUser',

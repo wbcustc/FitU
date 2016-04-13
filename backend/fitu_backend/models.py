@@ -23,6 +23,7 @@ class CustomUser(AbstractUser):
 	gender = models.CharField(choices = GENDER_CHOICES, max_length=10, default='Male')
 	bodyShape = models.CharField(choices = BODY_SHAPE_CHOICES, max_length=20, default='Pear')
 	avatarUrl = models.CharField(max_length = 500, default = r'https://s3.amazonaws.com/fituuseravatar/default.jpg')
+	
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
