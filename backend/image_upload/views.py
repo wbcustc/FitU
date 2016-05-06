@@ -22,6 +22,7 @@ class PhotoProfile(APIView):
 		objs = PhotoRecord.objects.all()
 		for index in xrange(len(profile)):
 			obj = objs[index]
+			obj.brand = profile[index][0]
 			obj.height = float(profile[index][1])
 			obj.weight = float(profile[index][2])
 			obj.shape = profile[index][3]
