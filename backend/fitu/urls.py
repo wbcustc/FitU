@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^avatars/$', upload_views.AvatarUpload.as_view()),
     url(r'^photos/$', upload_views.PhotoUpload.as_view()),
     url(r'^photos/(?P<username>.+)/$', upload_views.UserPhotoList.as_view()),
+    url(r'^photo-profile/', upload_views.PhotoProfile.as_view()),
     url(r'^api-token-auth/', json_views.ObtainAuthToken.as_view()),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

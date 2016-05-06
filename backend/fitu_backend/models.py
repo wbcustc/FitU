@@ -11,17 +11,13 @@ GENDER_CHOICES = (
 	(u'Male', u'Male'),
 )
 
-BODY_SHAPE_CHOICES = (
-	(u'Pear', u'Pear'),
-	(u'Apple', u'Apple'),
-	(u'Banana', u'Banana')
-)
+
 
 class CustomUser(AbstractUser):
-	weight = models.FloatField(default = 150)
-	height = models.FloatField(default = 5.5)
+	weight = models.FloatField(default = 70)
+	height = models.FloatField(default = 175)
 	gender = models.CharField(choices = GENDER_CHOICES, max_length=10, default='Male')
-	bodyShape = models.CharField(choices = BODY_SHAPE_CHOICES, max_length=20, default='Pear')
+	bodyShape = models.CharField(max_length=20, default='Male_1')
 	avatarUrl = models.CharField(max_length = 500, default = r'https://s3.amazonaws.com/fituuseravatar/default.jpg')
 	
 

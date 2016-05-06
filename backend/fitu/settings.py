@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'fitu_backend',
     'dbview',
-    'fitu_auth',
     'image_upload'
 )
 
